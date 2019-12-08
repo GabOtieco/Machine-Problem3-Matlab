@@ -1,0 +1,32 @@
+%MP Problem 3
+
+%Variables
+ep = input('Enter a "n sets" experimental points, eg. (n x 2 matrix): '); %Experimental Points 
+A = size(ep);
+ns = A(1:1); %Number Set
+dmax = ns - 1; %Max Degree
+nev = zeros(size(10)); %Normal Error Vector
+x = ep(:,1); y = ep(:,2);
+
+%Used FOR Loop Statements Inside An IF Statements.
+if ns <= 10
+    for n = 1:dmax
+        poly = polyfit(x, y, n);
+        ev = y - polyval(poly, x);
+        Norm = norm(ev);
+        nev(n) = Norm;
+    end
+elseif ns > 10
+    for n = 1:10
+        poly = polyfit(x, y, n);
+        ev = y - polyval(poly, x);
+        Norm = norm(ev);
+        nev(n) = Norm;
+    end
+end
+
+m = min(min(nev)); %Minimum
+LeastIndex = find(nev==m);
+BestFitPoly = polyfit(x, y, LeastIndex);
+
+disp('Best Fit Coefficients of the polynomial: '); disp(BestFitPoly)
